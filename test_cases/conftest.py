@@ -1,8 +1,20 @@
 # -*- coding:utf-8 -*-
+import os
+
 import pytest
+import yaml
 
 from test_cases.Calculator import Calculator
-from test_cases.test_calculator import get_datas
+
+currentpath = os.path.dirname((os.path.abspath(__file__)))
+rootPath = os.path.dirname(currentpath)
+yamlPath = os.path.join(rootPath, r'datas\calc.yaml')
+
+
+def get_datas():
+    with open(yamlPath, encoding='utf-8') as f:
+        datas = yaml.safe_load(f)
+    return datas
 
 
 @pytest.fixture(scope="class")

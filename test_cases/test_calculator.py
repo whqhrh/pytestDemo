@@ -4,19 +4,11 @@ import allure
 import pytest
 import yaml
 
-currentpath = os.path.dirname((os.path.abspath(__file__)))
-rootPath = os.path.dirname(currentpath)
-yamlPath = os.path.join(rootPath, r'datas\calc.yaml')
 
-
-def get_datas():
-    with open(yamlPath, encoding='utf-8') as f:
-        datas = yaml.safe_load(f)
-    return datas
-
-
+@allure.feature('计算器')
 class TestCalculator:
 
+    @allure.story('加法运算')
     @pytest.mark.smoke
     @pytest.mark.run(oder=3)
     @allure.severity('noraml')
@@ -31,6 +23,7 @@ class TestCalculator:
                           attachment_type=allure.attachment_type.TEXT)
             assert expect == result
 
+    @allure.story('float加法')
     @pytest.mark.run(oder=2)
     @allure.severity('noraml')
     def test_add_float(self, initcalc_class, get_add_datas1):
@@ -45,6 +38,7 @@ class TestCalculator:
                           attachment_type=allure.attachment_type.TEXT)
             assert expect == result1
 
+    @allure.story('除法运算')
     @pytest.mark.run(oder=1)
     @allure.severity('noraml')
     def test_div(self, initcalc_class, get_div_datas):
@@ -64,5 +58,5 @@ class TestCalculator:
 
 
 if __name__ == "__main__":
-    os.system('pytest --alluredir=../outputs/results ')
-    os.system('allure generate ../outputs/results  -o ../outputs/reports --clean')
+    pytest.main()
+    os.system(r'allure generate ../outputs/results  -o ../outputs/reports --clean')
